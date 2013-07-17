@@ -138,13 +138,19 @@
     }
     function bindVideoPositionChange(videoEl, timeEl, progressEl) {
       videoEl.addEventListener('timeupdate', function() {
-        var durationText = "";
-        var currentTimeText = "";
-        durationText = parseVideoTime(videoEl.duration || 0);
-        currentTimeText = parseVideoTime(videoEl.currentTime);
-        timeEl.innerText = currentTimeText + " / " + durationText;
-        progressEl.value = (videoEl.currentTime / videoEl.duration) * 100;
+        updateVideoPosition(videoEl, timeEl, progressEl);
       });
+      videoEl.addEventListener('durationchange', function() {
+        updateVideoPosition(videoEl, timeEl, progressEl);
+      });
+    }
+    function updateVideoPosition(videoEl, timeEl, progressEl) {
+      var durationText = "";
+      var currentTimeText = "";
+      durationText = parseVideoTime(videoEl.duration || 0);
+      currentTimeText = parseVideoTime(videoEl.currentTime);
+      timeEl.innerText = currentTimeText + " / " + durationText;
+      progressEl.value = (videoEl.currentTime / videoEl.duration) * 100;
     }
     function parseVideoTime(time) {
       var totalSeconds = Math.floor(time);
@@ -180,17 +186,15 @@
     }
 
     function handlePlaylist() {
-      var source = document.createElement("source");
       currentPlayedIndex = 0;
-      source.src = playlist[0];
+      videoEl.src = playlist[0];
       videoEl.addEventListener('ended', function() {
         if (currentPlayedIndex + 1 < playlist.length) {
-          videoEl.currentSrc = playlist[++currentPlayedIndex];
-          videoEl.currentTime = 0;
+          videoEl.src = playlist[++currentPlayedIndex];
+          videoEl.load();
           videoEl.play();
         }
       });
-      videoEl.appendChild(source);
     }
 
     function play() {
