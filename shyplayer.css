@@ -17,8 +17,17 @@ div:-webkit-full-screen {
     #fff 100%);
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 5px;
   color: white;
+}
+
+#shyplayer_controls span {
+  font-size: 12pt;
+  padding: 5px;
+}
+
+#shyplayer_controls button {
+  padding: 5px;
 }
 
 #shyplayer_controls progress {
