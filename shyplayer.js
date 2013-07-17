@@ -209,6 +209,8 @@
     }
 
     play();
+
+    return videoEl;
   }
 
   window.ShyPlayer = ShyPlayer;
