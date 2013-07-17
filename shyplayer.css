@@ -1,0 +1,31 @@
+div:-webkit-full-screen {
+  width: 100% !important;
+  height: 100% !important;
+  background: black;
+}
+
+#shyplayer_controls {
+  background: -webkit-linear-gradient(top,
+    #fff 0%,
+    #aaa 12.5%,
+    #888 25%,
+    #666 37.5%,
+    #555 50%,
+    #666 62.5%,
+    #888 75%,
+    #aaa 87.5%,
+    #fff 100%);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+#shyplayer_controls progress {
+  background: #666;
+  margin: 5px;
+}
+
+#shyplayer_controls progress::-webkit-progress-value {
+  background: #bbb;
+}
