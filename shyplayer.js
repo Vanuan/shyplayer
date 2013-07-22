@@ -51,12 +51,12 @@
       }
     }
 
-    function isFullscreen() {
-      return !window.screenTop && !window.screenY;
+    function isFullscreen(el) {
+      return (el.offsetWidth == screen.width && el.offsetHeight == screen.height)
     }
 
     function toggleFullscreen() {
-      if (!isFullscreen()){
+      if (!isFullscreen(videoComponent)){
         videoComponent.webkitRequestFullscreen();
       } else {
         document.webkitExitFullscreen();
