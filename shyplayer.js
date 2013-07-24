@@ -214,4 +214,4 @@
   }
 
   window.ShyPlayer = ShyPlayer;
-})();
+}());
