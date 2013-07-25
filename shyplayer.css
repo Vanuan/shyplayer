@@ -29,11 +29,11 @@ div:-webkit-full-screen {
 }
 
 .shyplayer_controls .button {
-  cursor: hand;
+  cursor: pointer;
 }
 
 .shyplayer_video .progress {
-  cursor: hand;
+  cursor: pointer;
 }
 
 
@@ -97,6 +97,7 @@ div:-webkit-full-screen {
 
 .shyplayer_controls .time {
   line-height: 16px;
+  font-size: 14px;
   margin: 5px;
   padding: 0;
   display: block;
