@@ -87,18 +87,18 @@
     }
 
     function createButton(name, handler) {
-      var button = document.createElement("button");
-      button.className = name + "_button";
+      var button = document.createElement("div");
+      button.className = name + "_button button";
       button.addEventListener('click', handler);
       return button;
     }
 
     function bindVideoPauseChange(videoEl, playEl) {
       videoEl.addEventListener('play', function() {
-        playEl.className = "pause_button";
+        playEl.className = "pause_button button";
       });
       videoEl.addEventListener('pause', function() {
-        playEl.className = "play_button";
+        playEl.className = "play_button button";
       });
     }
 
@@ -125,21 +125,22 @@
              ("0" + seconds).slice(-2);
     }
 
-    function updateVideoPosition(videoEl, timeEl, progressEl) {
+    function updateVideoPosition(videoEl, timeEl, progressValueEl) {
       var durationText = "";
       var currentTimeText = "";
       durationText = parseVideoTime(videoEl.duration || 0);
       currentTimeText = parseVideoTime(videoEl.currentTime);
       timeEl.innerText = currentTimeText + " / " + durationText;
-      progressEl.value = (videoEl.currentTime / videoEl.duration) * 100;
+      progressValueEl.style.width = (videoEl.currentTime / videoEl.duration) * 100  + '%';
+      console.log((videoEl.currentTime / videoEl.duration) * 100 + '%');
     }
 
-    function bindVideoPositionChange(videoEl, timeEl, progressEl) {
+    function bindVideoPositionChange(videoEl, timeEl, progressValueEl) {
       videoEl.addEventListener('timeupdate', function() {
-        updateVideoPosition(videoEl, timeEl, progressEl);
+        updateVideoPosition(videoEl, timeEl, progressValueEl);
       });
       videoEl.addEventListener('durationchange', function() {
-        updateVideoPosition(videoEl, timeEl, progressEl);
+        updateVideoPosition(videoEl, timeEl, progressValueEl);
       });
     }
 
@@ -156,25 +157,30 @@
     }
 
     function createControls(videoEl) {
-      var controls = document.createElement("ul");
+      var controls = document.createElement("div");
       controls.className = "shyplayer_controls";
       var playEl = createButton('play', function () {
         videoPlayPause();
       });
       bindVideoPauseChange(videoEl, playEl);
       controls.appendChild(playEl);
-      var progressEl = document.createElement("progress");
-      progressEl.max = 100;
-      progressEl.value = 0;
-      bindChangePosition(videoEl, progressEl);
-      controls.appendChild(progressEl);
-      var timeEl = document.createElement("span");
-      timeEl.className = "time";
-      bindVideoPositionChange(videoEl, timeEl, progressEl);
-      controls.appendChild(timeEl);
+      // order is important
       controls.appendChild(createButton('fullscreen', function (target) {
         toggleFullscreen();
       }));
+      var progressEl = document.createElement("div");
+      progressEl.className = "progress";
+      progressEl.max = 100;
+      progressEl.value = 0;
+      bindChangePosition(videoEl, progressEl);
+      var progressValueEl = document.createElement("div");
+      progressValueEl.className = "progressValue";
+      progressEl.appendChild(progressValueEl);
+      var timeEl = document.createElement("div");
+      timeEl.className = "time";
+      bindVideoPositionChange(videoEl, timeEl, progressValueEl);
+      controls.appendChild(timeEl);
+      controls.appendChild(progressEl);
       videoComponent.appendChild(controls);
       return controls;
     }
