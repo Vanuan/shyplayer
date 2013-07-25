@@ -131,8 +131,9 @@
       durationText = parseVideoTime(videoEl.duration || 0);
       currentTimeText = parseVideoTime(videoEl.currentTime);
       timeEl.innerText = currentTimeText + " / " + durationText;
-      progressValueEl.style.width = (videoEl.currentTime / videoEl.duration) * 100  + '%';
-      console.log((videoEl.currentTime / videoEl.duration) * 100 + '%');
+      if (videoEl.duration) {
+        progressValueEl.style.width = (videoEl.currentTime / videoEl.duration) * 100  + '%';
+      }
     }
 
     function bindVideoPositionChange(videoEl, timeEl, progressValueEl) {

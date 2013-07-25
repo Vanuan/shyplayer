@@ -28,7 +28,7 @@ div:-webkit-full-screen {
   position: relative;
 }
 
-.shyplayer_video .button {
+.shyplayer_controls .button {
   cursor: hand;
 }
 
