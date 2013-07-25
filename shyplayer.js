@@ -1,53 +1,53 @@
 (function() {
   'use strict';
 
-  function onIdle(idleStart, idleEnd) {
-    var idleTime = 0;
-    var idleInterval = null;
-    var lastMouseMove = {x: 0, y: 0};
-    function timerIncrement() {
-      idleTime = idleTime + 1;
-      if (idleTime > 1) { // 2 seconds
-        clearInterval(idleInterval);
-        idleStart();
-      }
-    }
-    function setIdleInterval() {
-      idleInterval = setInterval(timerIncrement, 1000); // each second
-    }
-    setIdleInterval();
-    function onIdleEnd (e) {
-      // workaround http://crbug.com/103041
-      if (e.type == "mousemove" && e.x == lastMouseMove.x &&
-        e.y == lastMouseMove.y) {
-        return;
-      } else {
-        lastMouseMove.x = e.x;
-        lastMouseMove.y = e.y;
-      }
-      clearInterval(idleInterval);
-      idleTime = 0;
-      idleEnd();
-      setIdleInterval();
-    }
-    document.onmousemove = onIdleEnd;
-    document.onkeypress = onIdleEnd;
-  }
-  
-  function hideOnIdle(elementToHide, elementToHideCursor) {
-    onIdle(function hideElementAndCursor() {
-      elementToHide.style.visibility = "hidden";
-      elementToHideCursor.style.cursor = "none";
-    }, function showControls() {
-      elementToHide.style.visibility = "visible";
-      elementToHideCursor.style.cursor = "pointer";
-    });
-  }
-
-
   function ShyPlayer(videoComponent, playlist, width, height) {
     var videoEl = null;
     var currentPlayedIndex = 0;
+  
+    function onIdle(idleStart, idleEnd) {
+      var idleTime = 0;
+      var idleInterval = null;
+      var lastMouseMove = {x: 0, y: 0};
+      function timerIncrement() {
+        idleTime = idleTime + 1;
+        if (idleTime > 1) { // 2 seconds
+          clearInterval(idleInterval);
+          idleStart();
+        }
+      }
+      function setIdleInterval() {
+        idleInterval = setInterval(timerIncrement, 1000); // each second
+      }
+      setIdleInterval();
+      function onIdleEnd (e) {
+        // workaround http://crbug.com/103041
+        if (e.type == "mousemove" && e.x == lastMouseMove.x &&
+          e.y == lastMouseMove.y) {
+          return;
+        } else {
+          lastMouseMove.x = e.x;
+          lastMouseMove.y = e.y;
+        }
+        clearInterval(idleInterval);
+        idleTime = 0;
+        idleEnd();
+        setIdleInterval();
+      }
+      document.onmousemove = onIdleEnd;
+      document.onkeypress = onIdleEnd;
+    }
+    
+    function hideOnIdle(elementToHide, elementToHideCursor) {
+      onIdle(function hideElementAndCursor() {
+        elementToHide.style.visibility = "hidden";
+        elementToHideCursor.style.cursor = "none";
+      }, function showControls() {
+        elementToHide.style.visibility = "visible";
+        elementToHideCursor.style.cursor = "pointer";
+      });
+    }
+
 
     function videoPlayPause() {
       if (!videoEl.paused && !videoEl.ended) {

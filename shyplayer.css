@@ -48,13 +48,6 @@ div:-webkit-full-screen {
   background-color: transparent;
   border: none;
   color: transparent;
-  display: block;
-  vertical-align: middle;
-}
-
-.shyplayer_controls progress {
-  display: block;
-  vertical-align: middle;
 }
 
 .shyplayer_controls .play_button {
