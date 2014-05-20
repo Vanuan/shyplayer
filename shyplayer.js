@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function ShyPlayer(videoComponent, playlist, width, height) {
+  function ShyPlayer(videoComponent, playlist, width, height, startIndex) {
     var videoEl = null;
     var currentPlayedIndex = 0;
   
@@ -146,8 +146,8 @@
     }
 
     function handlePlaylist() {
-      currentPlayedIndex = 0;
-      videoEl.src = playlist[0];
+      currentPlayedIndex = startIndex;
+      videoEl.src = playlist[startIndex];
       videoEl.addEventListener('ended', function() {
         if (currentPlayedIndex + 1 < playlist.length) {
           videoEl.src = playlist[++currentPlayedIndex];
